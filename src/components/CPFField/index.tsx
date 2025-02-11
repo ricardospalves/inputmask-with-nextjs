@@ -11,14 +11,17 @@ import Inputmask from "inputmask";
 
 type CPFFieldRef = HTMLInputElement;
 
-type PropsToOmit = "inputMode";
+type AttributesToOmit = "inputMode" | "type";
 
-type NativeProps = Omit<InputHTMLAttributes<CPFFieldRef>, PropsToOmit>;
+type NativeAttributes = Omit<
+  InputHTMLAttributes<CPFFieldRef>,
+  AttributesToOmit
+>;
 
-export type CPFFieldProps = NativeProps;
+export type CPFFieldProps = NativeAttributes;
 
 export const CPFField = forwardRef<CPFFieldRef, CPFFieldProps>(
-  ({ type, ...props }, ref) => {
+  ({ ...props }, ref) => {
     const innerRef = useRef<CPFFieldRef>(null);
 
     useImperativeHandle(ref, () => innerRef.current as CPFFieldRef);
@@ -35,14 +38,7 @@ export const CPFField = forwardRef<CPFFieldRef, CPFFieldProps>(
       }
     }, [innerRef]);
 
-    return (
-      <input
-        type={type || "text"}
-        inputMode="decimal"
-        {...props}
-        ref={innerRef}
-      />
-    );
+    return <input type="text" inputMode="decimal" {...props} ref={innerRef} />;
   }
 );
 

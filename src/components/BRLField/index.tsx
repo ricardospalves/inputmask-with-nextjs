@@ -11,16 +11,19 @@ import Inputmask from "inputmask";
 
 type BRLFieldRef = HTMLInputElement;
 
-type PropsToOmit = "inputMode";
+type AttributesToOmit = "inputMode" | "type";
 
-type NativeProps = Omit<InputHTMLAttributes<BRLFieldRef>, PropsToOmit>;
+type NativeAttributes = Omit<
+  InputHTMLAttributes<BRLFieldRef>,
+  AttributesToOmit
+>;
 
-export type BRLFieldProps = NativeProps & {
+export type BRLFieldProps = NativeAttributes & {
   maskPrefix?: boolean;
 };
 
 export const BRLField = forwardRef<BRLFieldRef, BRLFieldProps>(
-  ({ type, maskPrefix, ...props }, ref) => {
+  ({ maskPrefix, ...props }, ref) => {
     const innerRef = useRef<BRLFieldRef>(null);
 
     useImperativeHandle(ref, () => innerRef.current as BRLFieldRef);
@@ -42,14 +45,7 @@ export const BRLField = forwardRef<BRLFieldRef, BRLFieldProps>(
       }
     }, [maskPrefix, innerRef]);
 
-    return (
-      <input
-        type={type || "text"}
-        inputMode="decimal"
-        {...props}
-        ref={innerRef}
-      />
-    );
+    return <input type="text" inputMode="decimal" {...props} ref={innerRef} />;
   }
 );
 

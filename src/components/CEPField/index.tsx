@@ -11,14 +11,17 @@ import Inputmask from "inputmask";
 
 type CEPFieldRef = HTMLInputElement;
 
-type PropsToOmit = "inputMode";
+type AttributesToOmit = "inputMode" | "type";
 
-type NativeProps = Omit<InputHTMLAttributes<CEPFieldRef>, PropsToOmit>;
+type NativeAttributes = Omit<
+  InputHTMLAttributes<CEPFieldRef>,
+  AttributesToOmit
+>;
 
-export type CEPFieldProps = NativeProps;
+export type CEPFieldProps = NativeAttributes;
 
 export const CEPField = forwardRef<CEPFieldRef, CEPFieldProps>(
-  ({ type, ...props }, ref) => {
+  ({ ...props }, ref) => {
     const innerRef = useRef<CEPFieldRef>(null);
 
     useImperativeHandle(ref, () => innerRef.current as CEPFieldRef);
@@ -35,14 +38,7 @@ export const CEPField = forwardRef<CEPFieldRef, CEPFieldProps>(
       }
     }, [innerRef]);
 
-    return (
-      <input
-        type={type || "text"}
-        inputMode="decimal"
-        {...props}
-        ref={innerRef}
-      />
-    );
+    return <input type="text" inputMode="decimal" {...props} ref={innerRef} />;
   }
 );
 

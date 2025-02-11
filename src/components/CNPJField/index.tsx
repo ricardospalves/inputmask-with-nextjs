@@ -11,14 +11,17 @@ import Inputmask from "inputmask";
 
 type CNPJFieldRef = HTMLInputElement;
 
-type PropsToOmit = "inputMode";
+type AttributesToOmit = "inputMode" | "type";
 
-type NativeProps = Omit<InputHTMLAttributes<CNPJFieldRef>, PropsToOmit>;
+type NativeAttributes = Omit<
+  InputHTMLAttributes<CNPJFieldRef>,
+  AttributesToOmit
+>;
 
-export type CNPJFieldProps = NativeProps;
+export type CNPJFieldProps = NativeAttributes;
 
 export const CNPJField = forwardRef<CNPJFieldRef, CNPJFieldProps>(
-  ({ type, ...props }, ref) => {
+  ({ ...props }, ref) => {
     const innerRef = useRef<CNPJFieldRef>(null);
 
     useImperativeHandle(ref, () => innerRef.current as CNPJFieldRef);
@@ -35,14 +38,7 @@ export const CNPJField = forwardRef<CNPJFieldRef, CNPJFieldProps>(
       }
     }, [innerRef]);
 
-    return (
-      <input
-        type={type || "text"}
-        inputMode="decimal"
-        {...props}
-        ref={innerRef}
-      />
-    );
+    return <input type="text" inputMode="decimal" {...props} ref={innerRef} />;
   }
 );
 

@@ -19,16 +19,19 @@ const MASKS = {
 
 type PhoneFieldRef = HTMLInputElement;
 
-type PropsToOmit = "inputMode";
+type AttributesToOmit = "inputMode" | "type";
 
-type NativeProps = Omit<InputHTMLAttributes<PhoneFieldRef>, PropsToOmit>;
+type NativeAttributes = Omit<
+  InputHTMLAttributes<PhoneFieldRef>,
+  AttributesToOmit
+>;
 
-export type PhoneFieldProps = NativeProps & {
+export type PhoneFieldProps = NativeAttributes & {
   maskType?: keyof typeof MASKS;
 };
 
 export const PhoneField = forwardRef<PhoneFieldRef, PhoneFieldProps>(
-  ({ type, maskType = "all", ...props }, ref) => {
+  ({ maskType = "all", ...props }, ref) => {
     const innerRef = useRef<PhoneFieldRef>(null);
 
     useImperativeHandle(ref, () => innerRef.current as PhoneFieldRef);
@@ -45,14 +48,7 @@ export const PhoneField = forwardRef<PhoneFieldRef, PhoneFieldProps>(
       }
     }, [maskType, innerRef]);
 
-    return (
-      <input
-        type={type || "text"}
-        inputMode="decimal"
-        {...props}
-        ref={innerRef}
-      />
-    );
+    return <input type="text" inputMode="decimal" {...props} ref={innerRef} />;
   }
 );
 
