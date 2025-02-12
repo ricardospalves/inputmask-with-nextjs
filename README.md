@@ -2,6 +2,26 @@
 
 Exemplos de campos de texto usando o [inputmask](https://github.com/RobinHerbots/Inputmask) no Next.js.
 
+## Pré-requisitos
+
+O único pré-requisito é ter o **inputmask** instalado no seu projeto Next.js:
+
+```sh
+npm install inputmask
+
+```
+
+Caso esteja usando TypeScript, também é necessário adicionar as tipagens:
+
+```sh
+npm install --save-dev @types/inputmask
+
+```
+
+## Como usar
+
+Depois de concluir os pré-requisiots, agora basta escolher o seu componente, copiar e colar no seu projeto!
+
 ## Componentes disponíveis
 
 - [`<BRLField>` (campo de moeda)](src/components/BRLField/index.tsx);
